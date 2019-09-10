@@ -1,0 +1,18 @@
+#version 1.0
+#contact: piotr4@gmail.com
+#GPLv3
+
+[Desktop Entry]
+Type=Service
+ServiceTypes=KonqPopupMenu/Plugin
+MimeType=application/x-cbr;application/vnd.comicbook+zip;application/x-cd-image;application/zip;application/vnd.rar;application/x-7z-compressed;application/gzip;application/x-tar;application/x-ms-dos-executable;application/x-bzip2;application/vnd.ms-cab-compressed;application/java-archive;application/x-arj;application/x-cpio;application/x-apple-diskimage;application/x-xar;application/x-ms-wim;
+Actions=testArchive7z;
+X-KDE-Submenu=7z
+X-KDE-StartupNotify=false
+X-KDE-Priority=TopLevel
+
+[Desktop Action testArchive7z]
+Name=Test Archive (7z)
+InitialPreference=6
+Icon=utilities-file-archiver
+Exec=bash -c 'type 7z; if [ $? -eq 0 ]; then dbusRef=$(kdialog --title="Testing archive" --progressbar "          Testing...          Please wait...         " 0); outp=$(7z t "%u"); qdbus $dbusRef close; kdialog --title "Testing archive" --textbox /dev/stdin <<< $outp 450 550; else kdialog --title "Package missing" --error "Please install 7z from package manager."; fi;';
